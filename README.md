@@ -41,7 +41,7 @@ optional arguments:
 Example:
 python First_process_vcf.py -V test.vcf -O test_out_directory -S test_sample_name -f
 
-Notes:
+#### Notes:
 1. It is recommended that the vcf is run through GATK VQSR before this step. It is not necessary.
 1. By using the "-l"option you can run each chromosome separately
 1. By using "-f" option you will be running all chromosome in parallel. This is memory intensive but can be really fast depending on your computing capacity.
@@ -90,7 +90,7 @@ Example:
 
 python allele_frequency.py -B test.bam -V test.1000G_het_snps.vcf -O test_directory -S test_sample_name -f
 
-Notes:
+#### Notes:
 1. You can skip the first step and start with the second step if you already have a phase vcf, but keep the following in mind:
 	a.Make sure to subset the variants to only 1000 genome SNPS
 	b.Make sure to include only heterozygous SNPs
@@ -131,6 +131,6 @@ optional arguments:
 Example:
 python Third_generate_allele_frequency_plot.py -a test_AF.txt -g Test_germ_hap.vcf -o test_directory/ -S test_sample_name
 
-Notes:
+#### Notes:
 1. The "-n" option is for the number of SNP unit used. The default it 100. This means that the allele frequency is calculated over 100 SNPs and represented as a unit in the plot. This number is based on a whole genome sequenced sample with 5 million reads. But please change this unit appropriately for your samples to assure proper comparisons across samples with different read counts.
 
