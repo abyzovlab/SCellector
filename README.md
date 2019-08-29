@@ -20,8 +20,8 @@ This script takes a valid bulk vcf as input and does the following:
 The output consists of two vcfs:
 1. VCF with heterozygous snps from 1000 genome.
 1. Phased VCF with heterozygous snps from 1000 genome (this is the vcf you will be using in the second and third scripts).
+### Usage:
 ```javascript
-Usage:
 python First_process_vcf.py -h
 usage: First_process_vcf.py [-h] -V VCF_FILE -O OUTPUT_DIR -S SAMPLE_NAME
                             [-l CHROMOSOME_NUMBER] [-f]
@@ -54,16 +54,14 @@ This script takes a valid vcf (either from script 1 or otherwise) and a valid ba
 
 ### Output: 
 It outputs a file with allele frequency of each base at each position in the vcf provided. This file will be used in the third script to calculate haplotype allele frequency.
+### Usage:
 ```javascript
-Usage:
 python Second_calculate_allele_frequency.py  -h
 usage: Second_calculate_allele_frequency.py [-h] -B BAM_FILE -V VCF_FILE -O
                                             OUTPUT_DIR -S SAMPLE_NAME
                                             [-q MIN_BASE_QUALITY]
                                             [-Q MIN_MAPPING_QUALITY]
                                             [-l CHROMOSOME_NUMBER] [-a] [-n]
-
-Preprocessing of vcf file
 
 optional arguments:
   -h, --help            show this help message and exit
@@ -109,7 +107,7 @@ This script takes a the following files:
 
 ### Output: 
 The output consists of an allele frequency plot which shows the quality of amplification for the single cell samples.
-
+### Usage
 ```javascript
 python Third_generate_allele_frequency_plot.py -h
 usage: Third_generate_allele_frequency_plot.py [-h] -a AF_FILE -g GERM_HAP -o
