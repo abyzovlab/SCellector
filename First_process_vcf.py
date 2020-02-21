@@ -143,6 +143,7 @@ def extract_heterozygous_snps(vcf, vcf_out, chromosome_number, g1k_snp_dict):
             continue
         new_i = "\t".join([line[0], line[1], line[2], line[3], line[4], ".", ".", ".", "GT", gt])
         vcf_out_fh.write(new_i + "\n")
+
     vcf_out_fh.close()
 
 
