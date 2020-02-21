@@ -6,6 +6,7 @@ import gzip
 
 
 def FileValidator(file):
+    print(file)
     if os.path.exists(file) is False:
         raise Exception("\nERROR:File: " + file + " Doesn't exists")
     if os.path.isfile(file) is False:
