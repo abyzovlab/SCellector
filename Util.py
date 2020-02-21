@@ -47,7 +47,7 @@ def check_vcf_with_chr_or_not(vcf_file):
     elif vcf_file.endswith(".gz"):
         vcf_file_fh = gzip.open(vcf_file, 'rb')
     for i in vcf_file_fh:
-        if i.strip().startswith('#'):
+        if i.strip().startswith(b'#'):
             continue
         if i.startswith('chr'):
             vcf = "with_chr"
