@@ -164,7 +164,8 @@ def main():
     arg = parser.parse_args()
 
     config_file = os.path.join(script_path, "config_file/config.txt")
-    global config = Util.ParseConfig(config_file)
+    global config
+    config = Util.ParseConfig(config_file)
     # assigning values to variable
     output_dir = arg.Output_dir
     sample_name = arg.Sample_name
