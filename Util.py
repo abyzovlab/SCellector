@@ -44,12 +44,9 @@ def check_vcf_with_chr_or_not(vcf_file):
     '''checks if a vcf has "chr" before it's chromosome or not'''
     if vcf_file.endswith(".vcf"):
         vcf_file_fh = open(vcf_file)
-        print("in vcf")
     elif vcf_file.endswith(".gz"):
         vcf_file_fh = gzip.open(vcf_file, 'rt')
-        print("in gz")
     for i in vcf_file_fh:
-        print(i)
         if i.startswith('#'):
             continue
         if i.startswith('chr'):

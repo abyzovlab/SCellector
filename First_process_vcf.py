@@ -77,7 +77,7 @@ def read_1000_genome(vcf, chromosome_number=None):
         print("---------- reading chr" + chromosome_number + " SNPs from 1000 genome file----------")
     g1k_snp = config["G1K_SNP"]
     if g1k_snp.endswith(".gz"):
-        g1k_snp_fh = gzip.open(g1k_snp)
+        g1k_snp_fh = gzip.open(g1k_snp,'rt')
     else:
         g1k_snp_fh = open(g1k_snp)
     g1k_chr_status = Util.check_vcf_with_chr_or_not(g1k_snp)
