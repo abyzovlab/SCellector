@@ -143,7 +143,6 @@ def extract_heterozygous_snps(vcf, vcf_out, chromosome_number, g1k_snp_dict):
             continue
         new_i = "\t".join([line[0], line[1], line[2], line[3], line[4], ".", ".", ".", "GT", gt])
         vcf_out_fh.write(new_i + "\n")
-
     vcf_out_fh.close()
 
 
@@ -165,16 +164,7 @@ def main():
     arg = parser.parse_args()
 
     config_file = os.path.join(script_path, "config_file/config.txt")
-    try:
-        global config
-        config = Util.ParseConfig(config_file)
-    except:
-        if "JOB_ID" not in os.environ:
-            print(sys.exc_info()[1])
-            exit()
-        else:
-            print(sys.exc_info()[1])
-            exit()
+    global config = Util.ParseConfig(config_file)
     # assigning values to variable
     output_dir = arg.Output_dir
     sample_name = arg.Sample_name
