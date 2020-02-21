@@ -12,8 +12,8 @@ import threading
 import time
 
 
-def argument_parse(script_path):
-    '''Parses the command line arguments'''
+def argument_parse():
+    """Parses the command line arguments"""
     parser = argparse.ArgumentParser(description='Preprocessing of vcf file')
     parser.add_argument("-V", "--VCF_file", help="Path to VCF file", required=True, type=Util.FileValidator)
     parser.add_argument("-O", "--Output_dir", help="Path to directory where results will be written", required=True)
@@ -25,52 +25,52 @@ def argument_parse(script_path):
 
 
 def shapeit(vcf_file, output_dir, sample_name, chromosome_number):
-    '''running shapeit on vcf file'''
-    MAP = os.path.join(config["SHAPIT_REF"], "genetic_map_chr" + chromosome_number + "_combined_b37.txt")
-    HAP = os.path.join(config["SHAPIT_REF"], "1000GP_Phase3_chr" + chromosome_number + ".hap.gz")
-    LEG = os.path.join(config["SHAPIT_REF"], "1000GP_Phase3_chr" + chromosome_number + ".minimal.legend.gz")
-    SAM = os.path.join(config["SHAPIT_REF"], "1000GP_Phase3.sample")
-    CHK = os.path.join(output_dir, sample_name + "." + chromosome_number + ".alignments")
-    OUT = output_dir + "/" + sample_name + ".chr" + chromosome_number
-    OUT_VCF = output_dir + "/" + sample_name + ".chr" + chromosome_number + ".vcf"
-    OUT_VCF_fh = open(OUT_VCF, 'w')
+    """running shapeit on vcf file"""
+    map = os.path.join(config["SHAPIT_REF"], "genetic_map_chr" + chromosome_number + "_combined_b37.txt")
+    hap = os.path.join(config["SHAPIT_REF"], "1000GP_Phase3_chr" + chromosome_number + ".hap.gz")
+    leg = os.path.join(config["SHAPIT_REF"], "1000GP_Phase3_chr" + chromosome_number + ".minimal.legend.gz")
+    sam = os.path.join(config["SHAPIT_REF"], "1000GP_Phase3.sample")
+    chk = os.path.join(output_dir, sample_name + "." + chromosome_number + ".alignments")
+    out = output_dir + "/" + sample_name + ".chr" + chromosome_number
+    out_vcf = output_dir + "/" + sample_name + ".chr" + chromosome_number + ".vcf"
+    out_vcf_fh = open(out_vcf, 'w')
     shapeit = os.path.join(config["SHAPEIT_PATH"], "shapeit")
     vcf = vcf_file
     cmd = ' '.join([shapeit, "check",
                     "--input-vcf", vcf,
-                    "--input-map", MAP,
-                    "--input-ref", HAP, LEG, SAM,
-                    "--output-log", CHK,
-                    "--output-max", OUT])
+                    "--input-map", map,
+                    "--input-ref", hap, leg, sam,
+                    "--output-log", chk,
+                    "--output-max", out])
     print(cmd)
     os.system(cmd)
-    if os.path.exists(CHK + ".snp.strand.exclude") and os.path.getsize(CHK + ".snp.strand.exclude") > 0:
+    if os.path.exists(chk + ".snp.strand.exclude") and os.path.getsize(chk + ".snp.strand.exclude") > 0:
         cmd = ' '.join([shapeit, "--thread 4",
                         "--input-vcf", vcf,
-                        "--input-map", MAP,
-                        "--exclude-snp", CHK + ".snp.strand.exclude",
-                        "--input-ref", HAP, LEG, SAM,
-                        "--output-log", OUT,
-                        "--output-max", OUT])
+                        "--input-map", map,
+                        "--exclude-snp", chk + ".snp.strand.exclude",
+                        "--input-ref", hap, leg, sam,
+                        "--output-log", out,
+                        "--output-max", out])
     else:
         cmd = ' '.join([shapeit, "--thread 4",
                         "--input-vcf", vcf,
-                        "--input-map", MAP,
-                        "--input-ref", HAP, LEG, SAM,
-                        "--output-log", OUT,
-                        "--output-max", OUT])
+                        "--input-map", map,
+                        "--input-ref", hap, leg, sam,
+                        "--output-log", out,
+                        "--output-max", out])
     print(cmd)
     os.system(cmd)
-    OUT_VCF_fh.write("##fileformat=VCFv4.1\n")
-    OUT_VCF_fh.write("#CHROM\tPOS\tID\tREF\tALT\tQUAL\tFILTER\tINFO\tFORMAT\t" + sample_name + "\n")
-    for i in open(OUT + ".haps"):
+    out_vcf_fh.write("##fileformat=VCFv4.1\n")
+    out_vcf_fh.write("#CHROM\tPOS\tID\tREF\tALT\tQUAL\tFILTER\tINFO\tFORMAT\t" + sample_name + "\n")
+    for i in open(out + ".haps"):
         line = i.strip().split(" ")
         line_out = "\t".join([line[0], line[2], ".", line[3], line[4], ".", ".", ".", "GT", line[5] + "|" + line[6]])
-        OUT_VCF_fh.write(line_out + "\n")
+        out_vcf_fh.write(line_out + "\n")
 
 
 def read_1000_genome(vcf, chromosome_number=None):
-    '''reads the 1000 genome file and returns a dict of positions'''
+    """reads the 1000 genome file and returns a dict of positions"""
     if chromosome_number == None:
         print("---------- reading all SNPs from 1000 genome file----------")
     else:
@@ -108,7 +108,7 @@ def read_1000_genome(vcf, chromosome_number=None):
 
 
 def extract_heterozygous_snps(vcf, vcf_out, chromosome_number, g1k_snp_dict):
-    '''extracts the SNPs present in 1000G and keeps only mono allelic heterozygous snps'''
+    """extracts the SNPs present in 1000G and keeps only mono allelic heterozygous snps"""
     g1k_snp = config["G1K_SNP"]
     vcf_out_fh = open(vcf_out, 'w')
 
@@ -154,7 +154,7 @@ def extract_heterozygous_snps(vcf, vcf_out, chromosome_number, g1k_snp_dict):
 
 
 def running_preprocessing(vcf, output_dir, sample_name, chromosome_number, g1k_snp_dict):
-    '''given a chromosome number this runs pre processing step'''
+    """given a chromosome number this runs pre processing step"""
     print("-------------- processing for chr" + chromosome_number + "-------------------------")
     vcf_snp_het = os.path.join(output_dir, sample_name + ".chr" + chromosome_number + ".het_snps.vcf")
     print("1. Extracting heterozygous allelic SNPS present in 1000 Genomes")
@@ -166,9 +166,8 @@ def running_preprocessing(vcf, output_dir, sample_name, chromosome_number, g1k_s
 
 
 def main():
-    script_name = os.path.basename(sys.argv[0])
     script_path = os.path.dirname(os.path.abspath(sys.argv[0]))
-    parser = argument_parse(script_name)
+    parser = argument_parse()
     try:
         arg = parser.parse_args()
     except:
@@ -177,7 +176,7 @@ def main():
             exit()
         else:
             print(sys.exc_info()[1])
-            exit(100)
+            exit()
     global config
     config_file = os.path.join(script_path, "config_file/config.txt")
     try:
@@ -189,7 +188,7 @@ def main():
         else:
             print(sys.exc_info()[1])
             exit()
-    ### assigning values to variable
+    # assigning values to variable
     output_dir = arg.Output_dir
     sample_name = arg.Sample_name
     vcf = arg.VCF_file
@@ -197,10 +196,10 @@ def main():
     chromosome_number = arg.chromosome_number
     thread_list = []
     list_of_chromosomes = config["CHROMOSOMES"].split(":")
-    if chromosome_number == None:
-        g1k_snp_dict = read_1000_genome(vcf, None)
+    if chromosome_number is None:
+        g1k_snp_dict = read_1000_genome(vcf)
         for chromosome_number in list_of_chromosomes:
-            if all_chr_at_one == False:
+            if all_chr_at_one is False:
                 running_preprocessing(vcf, output_dir, sample_name, chromosome_number, g1k_snp_dict)
             else:
                 print("submitting chr" + chromosome_number + " in parallel")

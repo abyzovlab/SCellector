@@ -30,12 +30,12 @@ def FileValidator(file):
 
 
 def DirectoryValidator(file, read_write="NO"):
-    if os.path.exists(os.path.dirname(file)) == False:
+    if os.path.exists(os.path.dirname(file)) is False:
         raise Exception('\nERROR:Path:' + file + '\n:Does not exist')
     if read_write == "YES":
-        if os.access(os.path.dirname(file), os.W_OK) == False:
+        if os.access(os.path.dirname(file), os.W_OK) is False:
             raise Exception('\nERROR:File:\n' + os.path.dirname(file) + ':no write access ')
-    if os.path.isfile(file) == True:
+    if os.path.isfile(file) is True:
         raise Exception('\nERROR:Directory expected:\n' + file + ':is a file')
     return file
 
