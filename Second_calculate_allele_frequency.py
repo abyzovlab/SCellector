@@ -15,8 +15,14 @@ import re
 from subprocess import PIPE, Popen
 
 
+def cmdline(command):
+    """Executes the command and returns the result"""
+    process = Popen(args=command, stdout=PIPE, shell=True)
+    return process.communicate()[0]
+
+
 def argument_parse(script_path):
-    '''Parses the command line arguments'''
+    """Parses the command line arguments"""
     parser = argparse.ArgumentParser(description='Preprocessing of vcf file')
     parser.add_argument("-B", "--BAM_file", help="Path to bam file", required=True, type=Util.FileValidator)
     parser.add_argument("-V", "--VCF_file", help="Path to VCF file", required=True, type=Util.FileValidator)
@@ -32,10 +38,10 @@ def argument_parse(script_path):
 
 
 def rmv_indels(info):
-    '''
+    """
     Takes a string of bases with INDELs and returns the strings after removing INDELs
     Can be used to detect the Indels in future
-    '''
+    """
     if "+" in info or "-" in info:
         tmp_info = ""
         j = 0
@@ -59,12 +65,23 @@ def rmv_indels(info):
         info = tmp_info
     return info
 
+def snp_unit_calculation(bam):
+    cmd = " ".join([samtools, "view", bam,
+                    "| head -100 | cut -f10 | awk '{print length($1)}'|sort |uniq -c | sort -rnk 1,1| awk '{print $2}'| head -1"])
+    read_length = float(cmdline(cmd))
+    cmd = " ".join([samtools, "idxstats", bam,
+                    "| awk '{sum=sum+$3;print sum}'| tail -1"])
+    total_reads = float(cmdline(cmd))
+    bases_in_human_genome = float("3088286401")
+    coverage = float((total_reads * read_length) / bases_in_human_genome)
+    snp_unit = int(30 / coverage)
+    return snp_unit
 
 def base_quality_check(info, base_info, min_base_quality):
-    '''
+    """
     Does a base quality check.
     Removes bases lower than a base quality score provided by the user
-    '''
+    """
     base = ""
     qual = ""
     if len(info) == 0:
@@ -85,7 +102,7 @@ def base_quality_check(info, base_info, min_base_quality):
 def create_pileup_and_parse(bam_file, vcf, output_dir, sample_name, chromosome_number, minimum_base_quality,
                             minimum_mapping_quality):
     '''creates a pileup file, parses it and stores it in a file'''
-
+    global samtools
     samtools = config["SAMTOOLS"]
     reference = config["REFERENCE"]
     pileup_file = os.path.join(output_dir, sample_name + ".pileup")
@@ -217,7 +234,7 @@ def main():
             print(sys.exc_info()[1])
             Util.SendEmail(script_name, sys.exc_info()[1], os.environ['SGE_STDERR_PATH'])
             exit(100)
-    ### assigning values to variable
+    # assigning values to variable
     output_dir = arg.Output_dir
     sample_name = arg.Sample_name
     vcf = arg.VCF_file
@@ -251,6 +268,8 @@ def main():
     else:
         create_pileup_and_parse(bam_file, vcf, output_dir, sample_name, chromosome_number, minimum_base_quality,
                                 minimum_mapping_quality)
+    snp_unit = snp_unit_calculation(bam_file)
+    print("Recommended SNP unit to use for whole genome human sample=", snp_unit)
 
 
 if __name__ == "__main__":
