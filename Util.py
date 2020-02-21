@@ -6,9 +6,9 @@ import gzip
 
 
 def FileValidator(file):
-    if os.path.exists(file) == False:
+    if os.path.exists(file) is False:
         raise Exception("\nERROR:File: " + file + " Doesn't exists")
-    if os.path.isfile(file) == False:
+    if os.path.isfile(file) is False:
         raise Exception('\nERROR:File expected:' + file + ':is not a file')
     if os.stat(file)[6] == 0:
         raise Exception('\nERROR:File:' + file + ':is empty')
@@ -22,7 +22,7 @@ def FileValidator(file):
         if lines == 0:
             raise Exception('\nERROR:File:' + file + ':is empty')
 
-    if os.access(file, os.R_OK) == False:
+    if os.access(file, os.R_OK) is False:
         raise Exception('\nERROR:File:\n' + file + ':no read access ')
     return file
 
