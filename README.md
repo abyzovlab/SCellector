@@ -2,6 +2,8 @@
 1. Python 2.7 with the following packages
 	1. Pandas
 	1. Matplotlib
+	1. Scipy
+	1. Numpy
 1. Shapeit (only if you want to use our package for phasing your variants). This can be downloaded here: https://mathgen.stats.ox.ac.uk/genetics_software/shapeit/shapeit.html#download. Make sure to change the path to different tools in the config file (config_file/config.txt)
 
 Included in the package:
@@ -23,23 +25,23 @@ The output consists of two vcfs:
 ### Usage:
 ```javascript
 python First_process_vcf.py -h
-usage: First_process_vcf.py [-h] -V VCF_FILE -O OUTPUT_DIR -S SAMPLE_NAME
+usage: First_process_vcf.py [-h] -v VCF_FILE -o OUTPUT_DIR -s SAMPLE_NAME
                             [-l CHROMOSOME_NUMBER] [-f]
 
 optional arguments:
   -h, --help            show this help message and exit
-  -V VCF_FILE, --VCF_file VCF_FILE
+  -v VCF_FILE, --VCF_file VCF_FILE
                         Path to VCF file
-  -O OUTPUT_DIR, --Output_dir OUTPUT_DIR
+  -o OUTPUT_DIR, --Output_dir OUTPUT_DIR
                         Path to directory where results will be written
-  -S SAMPLE_NAME, --Sample_name SAMPLE_NAME
+  -s SAMPLE_NAME, --Sample_name SAMPLE_NAME
                         Name of the sample
   -l CHROMOSOME_NUMBER, --chromosome_number CHROMOSOME_NUMBER
                         chromosome number
   -f, --fast_option     run all chromosome in parallel.Uses more memory
 ```
 Example:
-python First_process_vcf.py -V test.vcf -O test_out_directory -S test_sample_name -f
+python First_process_vcf.py -v test.vcf -o test_out_directory -s test_sample_name -f
 
 #### Notes:
 1. It is recommended that the vcf is run through GATK VQSR before this step. It is not necessary.
@@ -53,25 +55,25 @@ This script takes a valid vcf (either from script 1 or otherwise) and a valid ba
 1.It uses the variants from the vcf and generates a pileup using the bam files. By default it filters any read with less than 20 mapping quality and any base with less than 20 base quality by default. But this can be changed using the parameters
 
 ### Output: 
-It outputs a file with allele frequency of each base at each position in the vcf provided. This file will be used in the third script to calculate haplotype allele frequency.
+It outputs a file with allele frequency of each base at each position in the vcf provided. This file will be used in the third script to calculate haplotype allele frequency.This script also provide a recommendation for the number of snps to use as a snp unit in the next step.
 ### Usage:
 ```javascript
 python Second_calculate_allele_frequency.py  -h
-usage: Second_calculate_allele_frequency.py [-h] -B BAM_FILE -V VCF_FILE -O
-                                            OUTPUT_DIR -S SAMPLE_NAME
+usage: Second_calculate_allele_frequency.py [-h] -b BAM_FILE -v VCF_FILE -o
+                                            OUTPUT_DIR -s SAMPLE_NAME
                                             [-q MIN_BASE_QUALITY]
                                             [-Q MIN_MAPPING_QUALITY]
                                             [-l CHROMOSOME_NUMBER] [-a] [-n]
 
 optional arguments:
   -h, --help            show this help message and exit
-  -B BAM_FILE, --BAM_file BAM_FILE
+  -b BAM_FILE, --BAM_file BAM_FILE
                         Path to bam file
-  -V VCF_FILE, --VCF_file VCF_FILE
+  -v VCF_FILE, --VCF_file VCF_FILE
                         Path to VCF file
-  -O OUTPUT_DIR, --Output_dir OUTPUT_DIR
+  -o OUTPUT_DIR, --Output_dir OUTPUT_DIR
                         Path to directory where results will be written
-  -S SAMPLE_NAME, --Sample_name SAMPLE_NAME
+  -s SAMPLE_NAME, --Sample_name SAMPLE_NAME
                         Name of the sample
   -q MIN_BASE_QUALITY, --min_base_quality MIN_BASE_QUALITY
                         Mininum base quality
@@ -86,7 +88,7 @@ optional arguments:
 ```
 Example:
 
-python allele_frequency.py -B test.bam -V test.1000G_het_snps.vcf -O test_directory -S test_sample_name -f
+python allele_frequency.py -b test.bam -v test.1000G_het_snps.vcf -o test_directory -s test_sample_name -f
 
 #### Notes:
 1. You can skip the first step and start with the second step if you already have a phase vcf, but keep the following in mind:
