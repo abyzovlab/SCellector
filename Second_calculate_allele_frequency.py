@@ -1,7 +1,6 @@
 """Generates allele frequency of variants using Bam file and vcf files"""
 __author__ = "Vivekananda Sarangi"
-__email__ = "sarangi.vivekananda@mayo.edu"
-__status__ = "Development"
+__email__ = "sarangi.vivekananda@mayo.edu,viveksarangi@gmail.com"
 
 import sys
 import threading
@@ -11,7 +10,6 @@ import argparse
 import Util
 import gzip
 import re
-
 from subprocess import PIPE, Popen
 
 
@@ -21,7 +19,7 @@ def cmdline(command):
     return process.communicate()[0]
 
 
-def argument_parse(script_path):
+def argument_parse():
     """Parses the command line arguments"""
     parser = argparse.ArgumentParser(description='Preprocessing of vcf file')
     parser.add_argument("-B", "--BAM_file", help="Path to bam file", required=True)
@@ -65,9 +63,11 @@ def rmv_indels(info):
         info = tmp_info
     return info
 
+
 def snp_unit_calculation(bam):
     cmd = " ".join([samtools, "view", bam,
-                    "| head -100 | cut -f10 | awk '{print length($1)}'|sort |uniq -c | sort -rnk 1,1| awk '{print $2}'| head -1"])
+                    "| head -100 | cut -f10 | awk '{print length($1)}'",
+                    "|sort |uniq -c | sort -rnk 1,1| awk '{print $2}'| head -1"])
     read_length = float(cmdline(cmd))
     cmd = " ".join([samtools, "idxstats", bam,
                     "| awk '{sum=sum+$3;print sum}'| tail -1"])
@@ -76,6 +76,7 @@ def snp_unit_calculation(bam):
     coverage = float((total_reads * read_length) / bases_in_human_genome)
     snp_unit = int(30 / coverage)
     return snp_unit
+
 
 def base_quality_check(info, base_info, min_base_quality):
     """
@@ -101,7 +102,7 @@ def base_quality_check(info, base_info, min_base_quality):
 
 def create_pileup_and_parse(bam_file, vcf, output_dir, sample_name, chromosome_number, minimum_base_quality,
                             minimum_mapping_quality):
-    '''creates a pileup file, parses it and stores it in a file'''
+    """creates a pileup file, parses it and stores it in a file"""
     global samtools
     samtools = config["SAMTOOLS"]
     reference = config["REFERENCE"]
@@ -119,8 +120,8 @@ def create_pileup_and_parse(bam_file, vcf, output_dir, sample_name, chromosome_n
                     "-f", reference,
                     "-l", pileup_file_pos,
                     "-o", pileup_file])
-    ### with chromosome option
-    if chromosome_number != None:
+    # with chromosome option
+    if chromosome_number is not None:
         output_file = os.path.join(output_dir, sample_name + ".chr" + chromosome_number + ".AF.txt")
         pileup_file = os.path.join(output_dir, sample_name + ".chr" + chromosome_number + ".pileup")
         pileup_file_pos = os.path.join(output_dir, sample_name + ".chr" + chromosome_number + ".pileup.pos")
@@ -159,7 +160,7 @@ def create_pileup_and_parse(bam_file, vcf, output_dir, sample_name, chromosome_n
     output_file_fh.write(
         "#Chr\tPos\tRef\tAlt\tDepth\tA\ta\tT\tt\tG\tg\tC\tc\tref_depth\talt_depth\tref_freq\talt_freq\n")
 
-    ### parsing pileup files
+    # parsing pileup files
     output_dict = {}
     for i in open(pileup_file):
         line = i.strip().split("\t")
@@ -167,7 +168,6 @@ def create_pileup_and_parse(bam_file, vcf, output_dir, sample_name, chromosome_n
         alt = vcf_dict[chr_pos][1]
         line1 = line[0] + "\t" + line[1] + "\t" + line[2] + "\t" + alt
         tot_depth = line[3]
-        line2 = ""
         rd = 3
         ref_depth = 0
         alt_depth = 0
@@ -209,36 +209,18 @@ def create_pileup_and_parse(bam_file, vcf, output_dir, sample_name, chromosome_n
 
 
 def main():
-    script_name = os.path.basename(sys.argv[0])
     script_path = os.path.dirname(os.path.abspath(sys.argv[0]))
-    parser = argument_parse(script_name)
-    try:
-        arg = parser.parse_args()
-    except:
-        if "JOB_ID" not in os.environ:
-            print(sys.exc_info()[1])
-            exit()
-        else:
-            print(sys.exc_info()[1])
-            Util.SendEmail(script_name, sys.exc_info()[1], os.environ['SGE_STDERR_PATH'])
-            exit(100)
+    parser = argument_parse()
+    arg = parser.parse_args()
+
     global config
     config_file = os.path.join(script_path, "config_file/config.txt")
-    try:
-        config = Util.ParseConfig(config_file)
-    except:
-        if "JOB_ID" not in os.environ:
-            print(sys.exc_info()[1])
-            exit()
-        else:
-            print(sys.exc_info()[1])
-            Util.SendEmail(script_name, sys.exc_info()[1], os.environ['SGE_STDERR_PATH'])
-            exit(100)
+    config = Util.ParseConfig(config_file)
+
     # assigning values to variable
     output_dir = arg.Output_dir
     sample_name = arg.Sample_name
     vcf = arg.VCF_file
-    all_chr_at_one = arg.all_chromosome_in_parallel
     chromosome_number = arg.chromosome_number
     bam_file = arg.BAM_file
     minimum_base_quality = arg.min_base_quality
@@ -248,17 +230,17 @@ def main():
     list_of_chromosomes = config["CHROMOSOMES"].split(":")
     # creating pileup files
     thread_list = []
-    if chromosome_number == None and no_split == False:
+    if chromosome_number is None and no_split is False:
         for chromosome_number in list_of_chromosomes:
-            if all_chr_at_one == False:
+            if all_chr_at_one is False:
                 print("Running chr" + chromosome_number)
                 create_pileup_and_parse(bam_file, vcf, output_dir, sample_name, chromosome_number, minimum_base_quality,
                                         minimum_mapping_quality)
             else:
                 print("Running chr" + chromosome_number + " in parallel-------------")
-                t = threading.Thread(target=create_pileup_and_parse, args=(
-                bam_file, vcf, output_dir, sample_name, chromosome_number, minimum_base_quality,
-                minimum_mapping_quality))
+                t = threading.Thread(target=create_pileup_and_parse, args=(bam_file, vcf, output_dir,
+                                        sample_name, chromosome_number, minimum_base_quality,
+                                        minimum_mapping_quality))
                 thread_list.append(t)
                 time.sleep(5)
                 t.start()
@@ -267,7 +249,7 @@ def main():
             thread.join()
     else:
         create_pileup_and_parse(bam_file, vcf, output_dir, sample_name, chromosome_number, minimum_base_quality,
-                                minimum_mapping_quality)
+                                 minimum_mapping_quality)
     snp_unit = snp_unit_calculation(bam_file)
     print("Recommended SNP unit to use for whole genome human sample=", snp_unit)
 

@@ -1,3 +1,6 @@
+"""Utility functions"""
+__author__ = "Vivekananda Sarangi"
+__email__ = "sarangi.vivekananda@mayo.edu,viveksarangi@gmail.com"
 import os
 import sys
 import pwd

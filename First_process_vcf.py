@@ -1,7 +1,7 @@
 """Takes a vcf, preprocesses it and generates phased data using shapeit"""
 __author__ = "Vivekananda Sarangi"
-__email__ = "sarangi.vivekananda@mayo.edu"
-__status__ = "Development"
+__email__ = "sarangi.vivekananda@mayo.edu,viveksarangi@gmail.com"
+
 
 import os
 import argparse

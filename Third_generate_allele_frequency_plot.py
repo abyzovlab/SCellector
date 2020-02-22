@@ -1,7 +1,6 @@
 """Combines the data from phasing file and allele frequency file from first and second script to generate allele frequency plot"""
 __author__ = "Vivekananda Sarangi"
-__email__ = "sarangi.vivekananda@mayo.edu"
-__status__ = "Development"
+__email__ = "sarangi.vivekananda@mayo.edu,viveksarangi@gmail.com"
 
 import os
 import argparse
@@ -9,6 +8,7 @@ import sys
 import Util
 import numpy as np
 import matplotlib
+from scipy.stats import norm
 
 matplotlib.use('Agg')
 import matplotlib.pyplot as plt
@@ -27,7 +27,7 @@ def argument_parse():
 
 
 def plot_data(output, sample_name):
-    '''plots allele frequency plot'''
+    """plots allele frequency plot"""
     plot_out = output.replace(".txt", ".png")
     af_numbers = []
     head = {}
@@ -42,18 +42,18 @@ def plot_data(output, sample_name):
     mu = np.mean(af_numbers)
     n, bins, patches = plt.hist(af_numbers, bins=31, range=(-0.01, 1.01), edgecolor='steelblue', color='steelblue',
                                 density='true')
-    y = matplotlib.mlab.normpdf(bins, mu, sigma)
+    y = norm.pdf(bins, mu, sigma)
     if sigma <= 0.25:
         plt.plot(bins, y, 'g-', linewidth=1.5)
     elif sigma <= 0.33:
         plt.plot(bins, y, 'y-', linewidth=1.5)
     else:
         plt.plot(bins, y, 'r-', linewidth=1.5)
-    plt.tick_params(labelsize=10, left='off', top='off', right='off', bottom='off')  ## removing tick marks
+    plt.tick_params(labelsize=10, left='off', top='off', right='off', bottom='off')  # removing tick marks
     sample = sample_name.split("_")[0].split(".")[0]
-    plt.title(sample, fontsize=20, loc='left')  ## sample name
-    plt.title("std=" + str(sigma)[:4], fontsize=20, loc='right')  ## std valu
-    ## lines for creating percent on y axis and limiting it to 30%
+    plt.title(sample, fontsize=20, loc='left')  # sample name
+    plt.title("std=" + str(sigma)[:4], fontsize=20, loc='right')  # std valu
+    # lines for creating percent on y axis and limiting it to 30%
     sum_n = sum(n)
     plt.xticks([0.1, 0.3, 0.5, 0.7, 0.9])
     plt.yticks([sum_n * 0.0, sum_n * 0.05, sum_n * 0.10, sum_n * 0.15, sum_n * 0.20, sum_n * 0.25, sum_n * 0.30])
@@ -69,38 +69,15 @@ def plot_data(output, sample_name):
 
 
 def main():
-    script_name = os.path.basename(sys.argv[0])
     parser = argument_parse()
-    try:
-        arg = parser.parse_args()
-    except:
-        if "JOB_ID" not in os.environ:
-            print(sys.exc_info()[1])
-            exit()
-        else:
-            print(sys.exc_info()[1])
-            Util.SendEmail(script_name, sys.exc_info()[1], os.environ['SGE_STDERR_PATH'])
-            exit(100)
+    arg = parser.parse_args()
     script_path = os.path.dirname(os.path.abspath(sys.argv[0]))
-    config_file = os.path.join(script_path, "config_file/config.txt")
-    try:
-        config = Util.ParseConfig(config_file)
-    except:
-        if "JOB_ID" not in os.environ:
-            print(sys.exc_info()[1])
-            exit()
-        else:
-            print(sys.exc_info()[1])
-            Util.SendEmail(script_name, sys.exc_info()[1], os.environ['SGE_STDERR_PATH'])
-            exit(100)
-    number_of_snps = arg.Snps
     output_dir = arg.Output_dir
     sample_name = arg.Sample_name
     output = os.path.join(output_dir, sample_name + ".hap_af.txt")
     af_file = arg.AF_file
     germ_hap = arg.Germ_hap
     number_of_snps = int(arg.Snps)
-    head = {}
     hap_dict = {}
     for i in open(germ_hap):
         if i.startswith("#"):
