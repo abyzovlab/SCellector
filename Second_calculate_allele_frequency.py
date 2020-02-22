@@ -262,6 +262,10 @@ def main():
         create_pileup_and_parse(bam_file, vcf, output_dir, sample_name, chromosome_number, minimum_base_quality,
                                 minimum_mapping_quality)
     snp_unit = snp_unit_calculation(bam_file)
+    snp_unit_file = os.path.join(output_dir, sample_name+".SNP_unit_to_use.txt")
+    snp_unit_file_fh = sys.open(snp_unit_file, 'w')
+    snp_unit_file_fh.write(snp_unit)
+    snp_unit_file_fh.close()
     print("Recommended SNP unit to use for whole genome human sample=", snp_unit)
 
 
