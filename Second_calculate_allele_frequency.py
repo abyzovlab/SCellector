@@ -22,10 +22,10 @@ def cmdline(command):
 def argument_parse():
     """Parses the command line arguments"""
     parser = argparse.ArgumentParser(description='Preprocessing of vcf file')
-    parser.add_argument("-B", "--BAM_file", help="Path to bam file", required=True)
-    parser.add_argument("-V", "--VCF_file", help="Path to VCF file", required=True, type=Util.FileValidator)
-    parser.add_argument("-O", "--Output_dir", help="Path to directory where results will be written", required=True)
-    parser.add_argument("-S", "--Sample_name", help="Name of the sample", required=True)
+    parser.add_argument("-b", "--BAM_file", help="Path to bam file", required=True)
+    parser.add_argument("-v", "--VCF_file", help="Path to VCF file", required=True, type=Util.FileValidator)
+    parser.add_argument("-o", "--Output_dir", help="Path to directory where results will be written", required=True)
+    parser.add_argument("-s", "--Sample_name", help="Name of the sample", required=True)
     parser.add_argument("-q", "--min_base_quality", help="Minimum base quality", default="20")
     parser.add_argument("-Q", "--min_mapping_quality", help="Minimum mapping quality", default="20")
     parser.add_argument("-l", "--chromosome_number", help="chromosome number ")

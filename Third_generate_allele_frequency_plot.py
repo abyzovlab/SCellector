@@ -16,17 +16,17 @@ import matplotlib.ticker as mticker
 
 
 def argument_parse():
-    '''Parses the command line arguments'''
+    """Parses the command line arguments"""
     parser = argparse.ArgumentParser(description='')
     parser.add_argument("-a", "--AF_file", help="path sample allele freq file", required=True, type=Util.FileValidator)
     parser.add_argument("-g", "--Germ_hap", help="Path to germline hap file", required=True, type=Util.FileValidator)
     parser.add_argument("-o", "--Output_dir", help="Path to output file", required=True)
-    parser.add_argument("-S", "--Sample_name", help="Name of the sample", required=True)
+    parser.add_argument("-s", "--Sample_name", help="Name of the sample", required=True)
     parser.add_argument("-n", "--Snps", help="Number_of_snps", default="100")
     return parser
 
 
-def plot_data(output, sample_name):
+def plot_data(output, sample_name, output_table):
     """plots allele frequency plot"""
     plot_out = output.replace(".txt", ".png")
     af_numbers = []
@@ -55,26 +55,29 @@ def plot_data(output, sample_name):
     plt.title("std=" + str(sigma)[:4], fontsize=20, loc='right')  # std valu
     # lines for creating percent on y axis and limiting it to 30%
     sum_n = sum(n)
+    allele_dropout=str((n[0]/sum_n)+(n[-1]/sum_n))
     plt.xticks([0.1, 0.3, 0.5, 0.7, 0.9])
     plt.yticks([sum_n * 0.0, sum_n * 0.05, sum_n * 0.10, sum_n * 0.15, sum_n * 0.20, sum_n * 0.25, sum_n * 0.30])
     formatter = mticker.FuncFormatter(lambda n, y: str((n / sum_n))[:4])
     n_for_y = sum_n * 0.3
-    plt.ylim(0, n_for_y)  ## setting the upper lim of y axis
+    plt.ylim(0, n_for_y)  # setting the upper lim of y axis
     plt.gca().yaxis.set_major_formatter(formatter)
     plt.xlabel("Allele Frequency")
     plt.ylabel("Percent of SNP units")
-    plt.tight_layout()  ## make every subplot fit properly
-    plt.grid(True, color='steelblue', linestyle="-", alpha=0.5)  ## adds grid
+    plt.tight_layout()  # make every subplot fit properly
+    plt.grid(True, color='steelblue', linestyle="-", alpha=0.5)  # adds grid
     plt.savefig(plot_out)
+    output_table.write(sample+"\t"+str(sigma)+"\t"+allele_dropout)
 
 
 def main():
     parser = argument_parse()
     arg = parser.parse_args()
-    script_path = os.path.dirname(os.path.abspath(sys.argv[0]))
     output_dir = arg.Output_dir
     sample_name = arg.Sample_name
     output = os.path.join(output_dir, sample_name + ".hap_af.txt")
+    output_table = os.path.join(output_dir, sample_name + ".out.txt")
+    output_table_fh = open(output_table, 'w')
     af_file = arg.AF_file
     germ_hap = arg.Germ_hap
     number_of_snps = int(arg.Snps)
@@ -132,8 +135,9 @@ def main():
             n_h2 += int(ref_depth)
         pos_end = line[1]
     output_fh.close()
-
-    plot_data(output, sample_name)
+    output_table_fh.write("Sample_name\tStandard_deviation\tAllele_dropout")
+    plot_data(output, sample_name, output_table_fh)
+    output_table_fh.close()
 
 
 if __name__ == "__main__":
