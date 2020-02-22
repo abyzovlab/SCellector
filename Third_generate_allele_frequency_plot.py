@@ -135,7 +135,7 @@ def main():
             n_h2 += int(ref_depth)
         pos_end = line[1]
     output_fh.close()
-    output_table_fh.write("Sample_name\tStandard_deviation\tAllele_dropout\n")
+    output_table_fh.write("#Sample_name\tStandard_deviation\tAllele_dropout\n")
     plot_data(output, sample_name, output_table_fh)
     output_table_fh.close()
 
