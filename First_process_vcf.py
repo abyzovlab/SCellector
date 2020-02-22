@@ -190,6 +190,15 @@ def main():
         time.sleep(60)
         for thread in thread_list:
             thread.join()
+        # merging all chromosome AF files here
+        output_af_one_chr_file = os.path.join(output_dir, sample_name + ".chr" + list_of_chromosomes[0] + ".vcf")
+        output_af_file = os.path.join(output_dir, sample_name + ".vcf")
+        cmd = " ".join(["cat", output_af_one_chr_file, "|grep \"#\" >", output_af_file])
+        os.system(cmd)
+        for chromosome_number in list_of_chromosomes:
+            output_af_per_chr_file = os.path.join(output_dir, sample_name + ".chr" + chromosome_number + ".vcf")
+            cmd = " ".join(["cat", output_af_per_chr_file, "|grep -v \"#\" >>", output_af_file])
+            os.system(cmd)
 
     else:
         g1k_snp_dict = read_1000_genome(vcf, chromosome_number)
