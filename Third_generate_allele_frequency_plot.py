@@ -1,4 +1,4 @@
-"""Combines the data from phasing file and allele frequency file from first and second script to generate allele frequency plot"""
+"""Combines the data from phasing file and allele frequency file from first and second script to generate VAF plot"""
 __author__ = "Vivekananda Sarangi"
 __email__ = "sarangi.vivekananda@mayo.edu,viveksarangi@gmail.com"
 
