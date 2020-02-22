@@ -50,7 +50,7 @@ def plot_data(output, sample_name, output_table):
     else:
         plt.plot(bins, y, 'r-', linewidth=1.5)
     plt.tick_params(labelsize=10, left='off', top='off', right='off', bottom='off')  # removing tick marks
-    sample = sample_name.split("_")[0].split(".")[0]
+    sample = sample_name
     plt.title(sample, fontsize=20, loc='left')  # sample name
     plt.title("std=" + str(sigma)[:4], fontsize=20, loc='right')  # std valu
     # lines for creating percent on y axis and limiting it to 30%
@@ -67,7 +67,7 @@ def plot_data(output, sample_name, output_table):
     plt.tight_layout()  # make every subplot fit properly
     plt.grid(True, color='steelblue', linestyle="-", alpha=0.5)  # adds grid
     plt.savefig(plot_out)
-    output_table.write(sample+"\t"+str(sigma)+"\t"+allele_dropout)
+    output_table.write(sample+"\t"+str(sigma)+"\t"+allele_dropout+"\n")
 
 
 def main():
@@ -135,7 +135,7 @@ def main():
             n_h2 += int(ref_depth)
         pos_end = line[1]
     output_fh.close()
-    output_table_fh.write("Sample_name\tStandard_deviation\tAllele_dropout")
+    output_table_fh.write("Sample_name\tStandard_deviation\tAllele_dropout\n")
     plot_data(output, sample_name, output_table_fh)
     output_table_fh.close()
 
