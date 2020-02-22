@@ -55,7 +55,7 @@ This script takes a valid vcf (either from script 1 or otherwise) and a valid ba
 1.It uses the variants from the vcf and generates a pileup using the bam files. By default it filters any read with less than 20 mapping quality and any base with less than 20 base quality by default. But this can be changed using the parameters
 
 ### Output: 
-It outputs a file with allele frequency of each base at each position in the vcf provided. This file will be used in the third script to calculate haplotype allele frequency.This script also provide a recommendation for the number of snps to use as a snp unit in the next step.
+It outputs a file with allele frequency of each base at each position in the vcf provided. This file will be used in the third script to calculate haplotype allele frequency.This script also provide a recommendation for the number of SNPs to use as a SNP unit in the next step.
 ### Usage:
 ```javascript
 python Second_calculate_allele_frequency.py  -h
@@ -132,5 +132,5 @@ Example:
 python Third_generate_allele_frequency_plot.py -a test_AF.txt -g Test_germ_hap.vcf -o test_directory/ -S test_sample_name
 
 #### Notes:
-1. The "-n" option is for the number of SNP unit used. The default it 100. This means that the allele frequency is calculated over 100 SNPs and represented as a unit in the plot. This number is based on a whole genome sequenced sample with 5 million reads. But please change this unit appropriately for your samples to assure proper comparisons across samples with different read counts.
+1. The "-n" option is for the number of SNP unit used. The default it 100. This means that the allele frequency is calculated over 100 SNPs and represented as a unit in the plot. This number is based on a whole genome sequenced sample with 5 million reads. But please change this unit appropriately for your samples to assure proper comparisons across samples with different read counts. The second script gives a recommendation on the number of SNPs to use as a SNP unit
 
