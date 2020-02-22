@@ -1,5 +1,5 @@
 # **Prerequisite:**
-1. Python 2.7 with the following packages
+1. Python 3.6 with the following packages
 	1. Pandas
 	1. Matplotlib
 	1. Scipy
