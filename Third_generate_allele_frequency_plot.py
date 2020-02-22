@@ -9,7 +9,6 @@ import Util
 import numpy as np
 import matplotlib
 from scipy.stats import norm
-
 matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 import matplotlib.ticker as mticker
