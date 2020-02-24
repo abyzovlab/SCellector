@@ -5,10 +5,11 @@
 	1. Scipy
 	1. Numpy
 1. Shapeit (only if you want to use our package for phasing your variants). This can be downloaded here: https://mathgen.stats.ox.ac.uk/genetics_software/shapeit/shapeit.html#download. Make sure to change the path to different tools in the config file (config_file/config.txt)
-
-Included in the package:
-1. Samtools 1.9
-1. 1000 genome SNPs 
+1. Samtools
+# **Configuration setup:** 
+1. Reference
+1. Dbsnp
+1. Shapeit
 
 # **This package consists of three scripts which should be run sequentially:**
 
