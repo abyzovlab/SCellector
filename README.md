@@ -41,7 +41,8 @@ optional arguments:
   -f, --fast_option     run all chromosome in parallel.Uses more memory
 ```
 Example:
-python First_process_vcf.py -v test.vcf -o test_out_directory -s test_sample_name -f
+
+```python First_process_vcf.py -v test.vcf -o test_out_directory -s test_sample_name -f```
 
 #### Notes:
 1. It is recommended that the vcf is run through GATK VQSR before this step. It is not necessary.
@@ -87,7 +88,7 @@ optional arguments:
 ```
 Example:
 
-python Second_calculate_allele_frequency.py -b test.bam -v test.1000G_het_snps.vcf -o test_directory -s test_sample_name -f
+```python Second_calculate_allele_frequency.py -b test.bam -v test.1000G_het_snps.vcf -o test_directory -s test_sample_name -f```
 
 #### Notes:
 1. You can skip the first step and start with the second step if you already have a phase vcf, but keep the following in mind:
@@ -127,7 +128,7 @@ optional arguments:
   -n SNPS, --Snps SNPS  Number_of_snps
 ```
 Example:
-python Third_generate_allele_frequency_plot.py -a test_AF.txt -g Test_germ_hap.vcf -o test_directory/ -S test_sample_name
+```python Third_generate_allele_frequency_plot.py -a test_AF.txt -g Test_germ_hap.vcf -o test_directory/ -S test_sample_name```
 
 #### Notes:
 1. The "-n" option is for the number of SNP unit used. The default it 100. This means that the allele frequency is calculated over 100 SNPs and represented as a unit in the plot. This number is based on a whole genome sequenced sample with 5 million reads. But please change this unit appropriately for your samples to assure proper comparisons across samples with different read counts. The second script gives a recommendation on the number of SNPs to use as a SNP unit.
