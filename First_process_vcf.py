@@ -14,7 +14,7 @@ import time
 
 def argument_parse():
     """Parses the command line arguments"""
-    parser = argparse.ArgumentParser(description='Preprocessing of vcf file')
+    parser = argparse.ArgumentParser(description='Pre-processing of vcf file')
     parser.add_argument("-v", "--VCF_file", help="Path to VCF file", required=True, type=Util.FileValidator)
     parser.add_argument("-o", "--Output_dir", help="Path to directory where results will be written", required=True)
     parser.add_argument("-s", "--Sample_name", help="Name of the sample", required=True)
@@ -96,12 +96,14 @@ def read_1000_genome(vcf, chromosome_number=None):
             line[0] = "chr" + line[0]
         if chromosome_number is not None and line[0] is not g1k_chromosome_number:
             continue
-        ref = line[2]
-        alt = line[3]
+        chrom = line[0]
+        position = line[1]
+        ref = line[3]
+        alt = line[4]
         if len(ref) > 1 or len(alt) > 1:
             continue
         snp_id = line[2]
-        pos = "_".join([line[0], line[1], line[2], line[3]])
+        pos = "_".join([chrom, position, ref, alt])
         g1k_snp_dict[pos] = snp_id
     g1k_snp_fh.close()
     return g1k_snp_dict

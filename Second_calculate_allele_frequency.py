@@ -122,11 +122,11 @@ def create_pileup_and_parse(bam_file, vcf, output_dir, sample_name, chromosome_n
                     "-o", pileup_file])
     # with chromosome option
     if chromosome_number is not None:
-        output_file = os.path.join(output_dir, sample_name + ".chr" + chromosome_number + ".AF.txt")
-        pileup_file = os.path.join(output_dir, sample_name + ".chr" + chromosome_number + ".pileup")
-        pileup_file_pos = os.path.join(output_dir, sample_name + ".chr" + chromosome_number + ".pileup.pos")
-        if Util.check_vcf_with_chr_or_not(vcf) == "with_chr":
+        if Util.check_vcf_with_chr_or_not(vcf) is not "with_chr":
             chromosome_number = "chr" + chromosome_number
+        output_file = os.path.join(output_dir, sample_name + "." + chromosome_number + ".AF.txt")
+        pileup_file = os.path.join(output_dir, sample_name + "." + chromosome_number + ".pileup")
+        pileup_file_pos = os.path.join(output_dir, sample_name + "." + chromosome_number + ".pileup.pos")
         cmd = " ".join(
             ["cat", vcf, "|grep -v \"#\" |grep -w \"^" + chromosome_number + "\"", "|awk '{print $1\"\\t\"$2}' >",
              pileup_file_pos])
