@@ -123,7 +123,7 @@ def create_pileup_and_parse(bam_file, vcf, output_dir, sample_name, chromosome_n
     # with chromosome option
 
     if chromosome_number is not None:
-        if Util.check_vcf_with_chr_or_not(vcf) != "with_chr" and not chromosome_number.startswith("chr"):
+        if Util.check_vcf_with_chr_or_not(vcf) != "with_chr" :
             chromosome_number = "chr" + chromosome_number
         output_file = os.path.join(output_dir, sample_name + "." + chromosome_number + ".AF.txt")
         pileup_file = os.path.join(output_dir, sample_name + "." + chromosome_number + ".pileup")
@@ -223,6 +223,8 @@ def main():
     sample_name = arg.Sample_name
     vcf = arg.VCF_file
     chromosome_number = arg.chromosome_number
+    if chromosome_number.startswith("chr"):
+        chromosome_number=chromosome_number.lstrip("chr")
     bam_file = arg.BAM_file
     minimum_base_quality = arg.min_base_quality
     minimum_mapping_quality = arg.min_mapping_quality
