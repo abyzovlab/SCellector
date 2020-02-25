@@ -5,10 +5,11 @@
 	1. Scipy
 	1. Numpy
 1. Shapeit (only if you want to use our package for phasing your variants). This can be downloaded here: https://mathgen.stats.ox.ac.uk/genetics_software/shapeit/shapeit.html#download. Make sure to change the path to different tools in the config file (config_file/config.txt)
-
-Included in the package:
-1. Samtools 1.9
-1. 1000 genome SNPs 
+1. Samtools
+# **Configuration setup:** 
+1. Reference
+1. Dbsnp
+1. Shapeit
 
 # **This package consists of three scripts which should be run sequentially:**
 
@@ -41,13 +42,13 @@ optional arguments:
   -f, --fast_option     run all chromosome in parallel.Uses more memory
 ```
 Example:
-python First_process_vcf.py -v test.vcf -o test_out_directory -s test_sample_name -f
+
+```python First_process_vcf.py -v test.vcf -o test_out_directory -s test_sample_name -f```
 
 #### Notes:
 1. It is recommended that the vcf is run through GATK VQSR before this step. It is not necessary.
-1. By using the "-l"option you can run each chromosome separately
+1. By using the "-l"option you can run each chromosome separately.
 1. By using "-f" option you will be running all chromosome in parallel. This is memory intensive but can be really fast depending on your computing capacity.
-1. This script generates files per chromosome and you will have to merge them to one file before proceeding to the next step.
 
 ## **Script 2:**
 ### Input: 
@@ -55,7 +56,7 @@ This script takes a valid vcf (either from script 1 or otherwise) and a valid ba
 1.It uses the variants from the vcf and generates a pileup using the bam files. By default it filters any read with less than 20 mapping quality and any base with less than 20 base quality by default. But this can be changed using the parameters
 
 ### Output: 
-It outputs a file with allele frequency of each base at each position in the vcf provided. This file will be used in the third script to calculate haplotype allele frequency.This script also provide a recommendation for the number of SNPs to use as a SNP unit in the next step.
+It outputs a file with allele frequency of each base at each position in the vcf provided. This file will be used in the third script to calculate haplotype allele frequency.This script also provide a recommendation for the number of SNPs to use as a SNP unit in the next step. 
 ### Usage:
 ```javascript
 python Second_calculate_allele_frequency.py  -h
@@ -88,16 +89,15 @@ optional arguments:
 ```
 Example:
 
-python allele_frequency.py -b test.bam -v test.1000G_het_snps.vcf -o test_directory -s test_sample_name -f
+```python Second_calculate_allele_frequency.py -b test.bam -v test.1000G_het_snps.vcf -o test_directory -s test_sample_name -f```
 
 #### Notes:
 1. You can skip the first step and start with the second step if you already have a phase vcf, but keep the following in mind:
 	a.Make sure to subset the variants to only 1000 genome SNPS
 	b.Make sure to include only heterozygous SNPs
-1. By using the "-l"  option you can run each chromosome separately
+1. By using the "-l"  option you can run each chromosome separately. You will have to merge the per chromosome files prior to the third step.
 1. By using "-f" option you will be running all chromosome in parallel. This is memory intensive but can be really fast depending on your computing capacity.
 1. This script generates also gives you the option to not split by chromosome and run everything as a whole with the “-n” option. This can be very time consuming if your data is too big.
-1. If you are not using the "-n" option, you will have to merge them to one file before proceeding to the next step.
 
 ## **Script 3:**
 ### Input: 
@@ -108,7 +108,7 @@ This script takes a the following files:
 	1. The genotype (GT field) is in the right phased format
 
 ### Output: 
-The output consists of an allele frequency plot which shows the quality of amplification for the single cell samples.
+The output consists of an allele frequency plot which shows the quality of amplification for the single cell samples. It also generates a file with standard deviation and allele dropout values
 ### Usage
 ```javascript
 python Third_generate_allele_frequency_plot.py -h
@@ -129,8 +129,8 @@ optional arguments:
   -n SNPS, --Snps SNPS  Number_of_snps
 ```
 Example:
-python Third_generate_allele_frequency_plot.py -a test_AF.txt -g Test_germ_hap.vcf -o test_directory/ -S test_sample_name
+```python Third_generate_allele_frequency_plot.py -a test_AF.txt -g Test_germ_hap.vcf -o test_directory/ -S test_sample_name```
 
 #### Notes:
-1. The "-n" option is for the number of SNP unit used. The default it 100. This means that the allele frequency is calculated over 100 SNPs and represented as a unit in the plot. This number is based on a whole genome sequenced sample with 5 million reads. But please change this unit appropriately for your samples to assure proper comparisons across samples with different read counts. The second script gives a recommendation on the number of SNPs to use as a SNP unit
+1. The "-n" option is for the number of SNP unit used. The default it 100. This means that the allele frequency is calculated over 100 SNPs and represented as a unit in the plot. This number is based on a whole genome sequenced sample with 5 million reads. But please change this unit appropriately for your samples to assure proper comparisons across samples with different read counts. The second script gives a recommendation on the number of SNPs to use as a SNP unit.
 
