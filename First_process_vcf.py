@@ -94,7 +94,7 @@ def read_1000_genome(vcf, chromosome_number=None):
             continue
         if vcf_chr_status != g1k_chr_status and g1k_chr_status == "without_chr":
             line[0] = "chr" + line[0]
-        if chromosome_number is not None and line[0] is not g1k_chromosome_number:
+        if chromosome_number is not None and line[0] != g1k_chromosome_number:
             continue
         chrom = line[0]
         position = line[1]
