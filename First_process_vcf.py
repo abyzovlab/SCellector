@@ -28,7 +28,7 @@ def run_shapeit(vcf_file, output_dir, sample_name, chromosome_number):
     """running shapeit on vcf file"""
     input_map = os.path.join(config["SHAPIT_REF"], "genetic_map_chr" + chromosome_number + "_combined_b37.txt")
     hap = os.path.join(config["SHAPIT_REF"], "1000GP_Phase3_chr" + chromosome_number + ".hap.gz")
-    leg = os.path.join(config["SHAPIT_REF"], "1000GP_Phase3_chr" + chromosome_number + ".minimal.legend.gz")
+    leg = os.path.join(config["SHAPIT_REF"], "1000GP_Phase3_chr" + chromosome_number + ".legend.gz")
     sam = os.path.join(config["SHAPIT_REF"], "1000GP_Phase3.sample")
     chk = os.path.join(output_dir, sample_name + "." + chromosome_number + ".alignments")
     out = output_dir + "/" + sample_name + ".chr" + chromosome_number
