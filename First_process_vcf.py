@@ -71,6 +71,8 @@ def run_shapeit(vcf_file, output_dir, sample_name, chromosome_number):
 
 def read_1000_genome(vcf, chromosome_number=None):
     """reads the 1000 genome file and returns a dict of positions"""
+    if chromosome_number.startswith("chr"):
+        chromosome_number=chromosome_number.lstrip("chr")
     if chromosome_number is None:
         print("---------- reading all SNPs from 1000 genome file----------")
     else:
