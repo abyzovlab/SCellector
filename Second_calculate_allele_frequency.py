@@ -121,6 +121,7 @@ def create_pileup_and_parse(bam_file, vcf, output_dir, sample_name, chromosome_n
                     "-l", pileup_file_pos,
                     "-o", pileup_file])
     # with chromosome option
+
     if chromosome_number is not None:
         if Util.check_vcf_with_chr_or_not(vcf) is not "with_chr":
             chromosome_number = "chr" + chromosome_number
