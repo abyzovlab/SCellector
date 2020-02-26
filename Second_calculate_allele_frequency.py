@@ -221,6 +221,8 @@ def main():
     # assigning values to variable
     output_dir = arg.Output_dir
     Util.ensure_dir(output_dir)
+    output_dir_tmp = os.path.join(output_dir, "tmp")
+    Util.ensure_dir(output_dir_tmp)
     sample_name = arg.Sample_name
     vcf = arg.VCF_file
     chromosome_number = arg.chromosome_number
@@ -238,13 +240,13 @@ def main():
         for chromosome_number in list_of_chromosomes:
             if all_chr_at_one is False:
                 print("Running chr" + chromosome_number)
-                create_pileup_and_parse(bam_file, vcf, output_dir,
+                create_pileup_and_parse(bam_file, vcf, output_dir_tmp,
                                         sample_name, chromosome_number,
                                         minimum_base_quality,
                                         minimum_mapping_quality)
             else:
                 print("Running chr" + chromosome_number + " in parallel-------------")
-                t = threading.Thread(target=create_pileup_and_parse, args=(bam_file, vcf, output_dir, sample_name,
+                t = threading.Thread(target=create_pileup_and_parse, args=(bam_file, vcf, output_dir_tmp, sample_name,
                                                                            chromosome_number, minimum_base_quality,
                                                                            minimum_mapping_quality))
                 thread_list.append(t)
@@ -254,12 +256,12 @@ def main():
         for thread in thread_list:
             thread.join()
         # merging all chromosome AF files here
-        output_af_one_chr_file = os.path.join(output_dir, sample_name + ".chr" + list_of_chromosomes[0] + ".AF.txt")
+        output_af_one_chr_file = os.path.join(output_dir_tmp, sample_name + ".chr" + list_of_chromosomes[0] + ".AF.txt")
         output_af_file = os.path.join(output_dir, sample_name + ".AF.txt")
         cmd = " ".join(["cat", output_af_one_chr_file, "|grep \"#\" >", output_af_file])
         os.system(cmd)
         for chromosome_number in list_of_chromosomes:
-            output_af_per_chr_file = os.path.join(output_dir, sample_name + ".chr" + chromosome_number + ".AF.txt")
+            output_af_per_chr_file = os.path.join(output_dir_tmp, sample_name + ".chr" + chromosome_number + ".AF.txt")
             cmd = " ".join(["cat", output_af_per_chr_file, "|grep -v \"#\" >>", output_af_file])
             os.system(cmd)
     else:

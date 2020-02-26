@@ -171,6 +171,8 @@ def main():
     # assigning values to variable
     output_dir = arg.Output_dir
     Util.ensure_dir(output_dir)
+    output_dir_tmp=os.path.join(output_dir,"tmp")
+    Util.ensure_dir(output_dir_tmp)
     sample_name = arg.Sample_name
     vcf = arg.VCF_file
     all_chr_at_one = arg.fast_option
@@ -183,11 +185,11 @@ def main():
         g1k_snp_dict = read_1000_genome(vcf)
         for chromosome_number in list_of_chromosomes:
             if all_chr_at_one is False:
-                running_preprocessing(vcf, output_dir, sample_name, chromosome_number, g1k_snp_dict)
+                running_preprocessing(vcf, output_dir_tmp, sample_name, chromosome_number, g1k_snp_dict)
             else:
                 print("submitting chr" + chromosome_number + " in parallel")
                 t = threading.Thread(target=running_preprocessing,
-                                     args=(vcf, output_dir, sample_name, chromosome_number, g1k_snp_dict))
+                                     args=(vcf, output_dir_tmp, sample_name, chromosome_number, g1k_snp_dict))
                 time.sleep(5)
                 t.start()
                 time.sleep(5)
@@ -196,12 +198,12 @@ def main():
         for thread in thread_list:
             thread.join()
         # merging all chromosome AF files here
-        output_af_one_chr_file = os.path.join(output_dir, sample_name + ".chr" + list_of_chromosomes[0] + ".vcf")
+        output_af_one_chr_file = os.path.join(output_dir_tmp, sample_name + ".chr" + list_of_chromosomes[0] + ".vcf")
         output_af_file = os.path.join(output_dir, sample_name + ".vcf")
         cmd = " ".join(["cat", output_af_one_chr_file, "|grep \"#\" >", output_af_file])
         os.system(cmd)
         for chromosome_number in list_of_chromosomes:
-            output_af_per_chr_file = os.path.join(output_dir, sample_name + ".chr" + chromosome_number + ".vcf")
+            output_af_per_chr_file = os.path.join(output_dir_tmp, sample_name + ".chr" + chromosome_number + ".vcf")
             cmd = " ".join(["cat", output_af_per_chr_file, "|grep -v \"#\" >>", output_af_file])
             os.system(cmd)
 
