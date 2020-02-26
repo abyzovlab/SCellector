@@ -220,6 +220,7 @@ def main():
 
     # assigning values to variable
     output_dir = arg.Output_dir
+    Util.ensure_dir(output_dir)
     sample_name = arg.Sample_name
     vcf = arg.VCF_file
     chromosome_number = arg.chromosome_number

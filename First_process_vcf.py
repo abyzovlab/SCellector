@@ -170,6 +170,7 @@ def main():
     config = Util.ParseConfig(config_file)
     # assigning values to variable
     output_dir = arg.Output_dir
+    Util.ensure_dir(output_dir)
     sample_name = arg.Sample_name
     vcf = arg.VCF_file
     all_chr_at_one = arg.fast_option

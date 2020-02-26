@@ -73,6 +73,7 @@ def main():
     parser = argument_parse()
     arg = parser.parse_args()
     output_dir = arg.Output_dir
+    Util.ensure_dir(output_dir)
     sample_name = arg.Sample_name
     output = os.path.join(output_dir, sample_name + ".hap_af.txt")
     output_table = os.path.join(output_dir, sample_name + ".out.txt")
