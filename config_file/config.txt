@@ -1,6 +1,6 @@
-SHAPEIT_PATH=/research/bsi/projects/staff_analysis/m109297/Scripts/SS_QC_package/new_package/tools/shapeit/v2.r837/bin/
-SAMTOOLS=/research/bsi/projects/staff_analysis/m109297/Scripts/SS_QC_package/new_package/tools/samtools-1.9/bin/samtools
+SHAPEIT_PATH=/local_path/shapeit/bin/
+SAMTOOLS=/local_path/samtools
 CHROMOSOMES=1:2:3:4:5:6:7:8:9:10:11:12:13:14:15:16:17:18:19:20:21:22
-REFERENCE=/research/bsi/data/refdata/app/gatk_bundle/human/2.8/b37/processed/2015_11_04/allchr.fa
-G1K_SNP=/research/bsi/projects/staff_analysis/m109297/Scripts/SS_QC_package/new_package/reference/1000_genome_snps/g1k_snp.txt.gz
-SHAPIT_REF=/research/bsi/projects/staff_analysis/m109297/Scripts/SS_QC_package/new_package/reference/shapeit_ref/
+REFERENCE=/local_path/human_g1k_v37_decoy.fasta
+G1K_SNP=/local_path/dbsnp_138.b37.vcf.gz
+SHAPIT_REF=/local_path/shapeit_ref/
