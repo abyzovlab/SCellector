@@ -8,41 +8,51 @@
 The method required the following tools and references. Please follow the steps to download the dependencies. 
 1. Shapeit (download and update "SHAPEIT_PATH"  in config_file/config.txt):
 
-   ```wget https://mathgen.stats.ox.ac.uk/genetics_software/shapeit/shapeit.v2.r904.glibcv2.12.linux.tar.gz```
+   ```
+   wget https://mathgen.stats.ox.ac.uk/genetics_software/shapeit/shapeit.v2.r904.glibcv2.12.linux.tar.gz
    
-    ```tar zvfx shapeit.v2.r904.glibcv2.12.linux.tar.gz```
+   tar zvfx shapeit.v2.r904.glibcv2.12.linux.tar.gz
+   ```
 
 1. Shapeit reference (download and update "SHAPIT_REF"  in config_file/config.txt):
     
-     ```wget https://mathgen.stats.ox.ac.uk/impute/1000GP_Phase3.tgz```
+   ```
+   wget https://mathgen.stats.ox.ac.uk/impute/1000GP_Phase3.tgz
 
-    ```tar -xvzf 1000GP_Phase3.tgz ```
+   tar -xvzf 1000GP_Phase3.tgz 
+   ```
     
 1. Samtools (download and update "SAMTOOLS"  in config_file/config.txt):
 
-    ```wget https://sourceforge.net/projects/samtools/files/samtools/1.9/samtools-1.9.tar.bz2```
+    ```
+   wget https://sourceforge.net/projects/samtools/files/samtools/1.9/samtools-1.9.tar.bz2
     
-    ```tar -xvf samtools-1.9.tar.bz2```
+   tar -xvf samtools-1.9.tar.bz2
     
-    ```cd samtools-1.9/```
+   cd samtools-1.9/
     
-    ```/.configure```
+    /.configure
     
-    ```make```
+    make
+   ```
 
 1. Reference (download and update "REFERENCE"  in config_file/config.txt):
 
-    ```wget ftp://gsapubftp-anonymous@ftp.broadinstitute.org/bundle/b37/human_g1k_v37_decoy.fasta.gz```
+    ```
+    wget ftp://gsapubftp-anonymous@ftp.broadinstitute.org/bundle/b37/human_g1k_v37_decoy.fasta.gz
     
-    ```wget ftp://gsapubftp-anonymous@ftp.broadinstitute.org/bundle/b37/human_g1k_v37_decoy.fasta.fai.gz```
+    wget ftp://gsapubftp-anonymous@ftp.broadinstitute.org/bundle/b37/human_g1k_v37_decoy.fasta.fai.gz
     
-    ```gunzip human_g1k_v37_decoy.fasta.gz```
+    gunzip human_g1k_v37_decoy.fasta.gz
     
-    ```gunzip human_g1k_v37_decoy.fasta.fai.gz```
+    gunzip human_g1k_v37_decoy.fasta.fai.gz
+   ```
 
 1. 1000 genome SNPs (download and update "G1K_SNP"  in config_file/config.txt):
 
-    ```wget ftp://gsapubftp-anonymous@ftp.broadinstitute.org/bundle/b37/dbsnp_138.b37.vcf.gz```
+    ```
+    wget ftp://gsapubftp-anonymous@ftp.broadinstitute.org/bundle/b37/dbsnp_138.b37.vcf.gz
+   ```
 
 # **This package consists of three scripts which should be run sequentially:**
 ## **Script 1:**
@@ -74,7 +84,9 @@ optional arguments:
 ```
 Example:
 
-```python First_process_vcf.py -v example_data/example_input/B01_bulk_downsampled.vcf -o example_data/example_output/script_1/ -s B01_cell_1 -f```
+```
+python First_process_vcf.py -v example_data/example_input/B01_bulk_downsampled.vcf -o example_data/example_output/script_1/ -s B01_cell_1 -f
+```
 
 #### Notes:
 1. It is recommended that the vcf is run through GATK VQSR before this step. It is not necessary.
@@ -120,7 +132,9 @@ optional arguments:
 ```
 Example:
 
-```python Second_calculate_allele_frequency.py -b example_data/example_input/B01_cell_1_downsampled.bam -v example_data/example_output/script_1/B01_cell_1.vcf -o example_data/example_output/script_2/ -s B01_cell_1 -f```
+```
+python Second_calculate_allele_frequency.py -b example_data/example_input/B01_cell_1_downsampled.bam -v example_data/example_output/script_1/B01_cell_1.vcf -o example_data/example_output/script_2/ -s B01_cell_1 -f
+```
 
 #### Notes:
 1. You can skip the first step and start with the second step if you already have a phase vcf, but keep the following in mind:
@@ -160,7 +174,9 @@ optional arguments:
   -n SNPS, --Snps SNPS  Number_of_snps
 ```
 Example:
-```python Third_generate_allele_frequency_plot.py -a example_data/example_output/script_2/B01_cell_1.AF.txt -g example_data/example_output/script_1/B01_cell_1.vcf -o example_data/example_output/script_3/ -s B01_cell_1 -n 200```
+```
+python Third_generate_allele_frequency_plot.py -a example_data/example_output/script_2/B01_cell_1.AF.txt -g example_data/example_output/script_1/B01_cell_1.vcf -o example_data/example_output/script_3/ -s B01_cell_1 -n 200
+```
 
 #### Notes:
 1. The "-n" option is for the number of SNP unit used. The default it 100. This means that the allele frequency is calculated over 100 SNPs and represented as a unit in the plot. This number is based on a whole genome sequenced sample with 5 million reads. But please change this unit appropriately for your samples to assure proper comparisons across samples with different read counts. The second script gives a recommendation on the number of SNPs to use as a SNP unit.
