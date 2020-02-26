@@ -223,7 +223,7 @@ def main():
     sample_name = arg.Sample_name
     vcf = arg.VCF_file
     chromosome_number = arg.chromosome_number
-    if chromosome_number.startswith("chr"):
+    if chromosome_number is not None and chromosome_number.startswith("chr"):
         chromosome_number=chromosome_number.lstrip("chr")
     bam_file = arg.BAM_file
     minimum_base_quality = arg.min_base_quality

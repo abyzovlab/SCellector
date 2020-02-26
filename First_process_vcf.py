@@ -174,7 +174,7 @@ def main():
     vcf = arg.VCF_file
     all_chr_at_one = arg.fast_option
     chromosome_number = arg.chromosome_number
-    if chromosome_number.startswith("chr"):
+    if chromosome_number is not None chromosome_number.startswith("chr"):
         chromosome_number=chromosome_number.lstrip("chr")
     thread_list = []
     list_of_chromosomes = config["CHROMOSOMES"].split(":")
