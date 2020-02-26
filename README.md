@@ -6,19 +6,19 @@
 	1. Numpy
 # **Configuration file setup:** 
 The method required the following tools and references. Please follow the steps to download the dependencies. 
-1. Shapeit (download and update "SHAPEIT_PATH"  in config/config.txt):
+1. Shapeit (download and update "SHAPEIT_PATH"  in config_file/config.txt):
 
    ```wget https://mathgen.stats.ox.ac.uk/genetics_software/shapeit/shapeit.v2.r904.glibcv2.12.linux.tar.gz```
    
     ```tar zvfx shapeit.v2.r904.glibcv2.12.linux.tar.gz```
 
-1. Shapeit reference (download and update "SHAPIT_REF"  in config/config.txt):
+1. Shapeit reference (download and update "SHAPIT_REF"  in config_file/config.txt):
     
      ```wget https://mathgen.stats.ox.ac.uk/impute/1000GP_Phase3.tgz```
 
     ```tar -xvzf 1000GP_Phase3.tgz ```
     
-1. Samtools (download and update "SAMTOOLS"  in config/config.txt):
+1. Samtools (download and update "SAMTOOLS"  in config_file/config.txt):
 
     ```wget https://sourceforge.net/projects/samtools/files/samtools/1.9/samtools-1.9.tar.bz2```
     
@@ -30,7 +30,7 @@ The method required the following tools and references. Please follow the steps 
     
     ```make```
 
-1. Reference (download and update "REFERENCE"  in config/config.txt):
+1. Reference (download and update "REFERENCE"  in config_file/config.txt):
 
     ```wget ftp://gsapubftp-anonymous@ftp.broadinstitute.org/bundle/b37/human_g1k_v37_decoy.fasta.gz```
     
@@ -40,7 +40,7 @@ The method required the following tools and references. Please follow the steps 
     
     ```gunzip human_g1k_v37_decoy.fasta.fai.gz```
 
-1. 1000 genome SNPs (download and update "G1K_SNP"  in config/config.txt):
+1. 1000 genome SNPs (download and update "G1K_SNP"  in config_file/config.txt):
 
     ```wget ftp://gsapubftp-anonymous@ftp.broadinstitute.org/bundle/b37/dbsnp_138.b37.vcf.gz```
 
