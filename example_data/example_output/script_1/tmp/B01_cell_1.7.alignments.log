@@ -1,0 +1,34 @@
+Mode    : Phaser
+Options : check --input-vcf example_data/example_output/script_1/tmp/B01_cell_1.chr7.het_snps.vcf --input-map /research/bsi/projects/staff_analysis/m109297/software/shapeit_dependencies/reference/1000GP_Phase3/genetic_map_chr7_combined_b37.txt --input-ref /research/bsi/projects/staff_analysis/m109297/software/shapeit_dependencies/reference/1000GP_Phase3/1000GP_Phase3_chr7.hap.gz /research/bsi/projects/staff_analysis/m109297/software/shapeit_dependencies/reference/1000GP_Phase3/1000GP_Phase3_chr7.legend.gz /research/bsi/projects/staff_analysis/m109297/software/shapeit_dependencies/reference/1000GP_Phase3/1000GP_Phase3.sample --output-log example_data/example_output/script_1/tmp/B01_cell_1.7.alignments --output-max example_data/example_output/script_1/tmp/B01_cell_1.chr7
+Version : v2.r904
+Date    : 26/02/2020 16:03:50
+
+MODE -phase : PHASING GENOTYPE DATA
+  * Autosome (chr1 ... chr22)
+  * Window-based model (SHAPEIT v2)
+  * Reference panel of haplotypes used
+  * MCMC iteration
+
+Parameters :
+  * Seed : 1582754630
+  * Parallelisation: 1 threads
+  * Ref allele is NOT aligned on the reference genome
+  * MCMC: 35 iterations [7 B + 1 runs of 8 P + 20 M]
+  * Model: 100 states per window [100 H + 0 PM + 0 R + 0 COV ] / Windows of ~2.0 Mb / Ne = 15000
+
+Reading unphased data in [example_data/example_output/script_1/tmp/B01_cell_1.chr7.het_snps.vcf]
+  * 1 samples included
+  * 1 unrelateds / 0 duos / 0 trios in 1 different families
+  * 2224 SNPs included
+
+Reading sample list [/research/bsi/projects/staff_analysis/m109297/software/shapeit_dependencies/reference/1000GP_Phase3/1000GP_Phase3.sample]
+  * 5008 reference haplotypes included
+
+Reading SNPs in [/research/bsi/projects/staff_analysis/m109297/software/shapeit_dependencies/reference/1000GP_Phase3/1000GP_Phase3_chr7.legend.gz]
+  * 2191 reference panel sites included
+  * 4739392 reference panel sites excluded
+
+ERROR: Reference and Main panels are not well aligned:
+  * #Missing sites in reference panel = 31
+  * #Misaligned sites between panels = 2
+  * #Multiple alignments between panels = 0

@@ -1,0 +1,141 @@
+Mode    : Phaser
+Options : --thread 4 --input-vcf example_data/example_output/script_1/tmp/B01_cell_1.chr15.het_snps.vcf --input-map /research/bsi/projects/staff_analysis/m109297/software/shapeit_dependencies/reference/1000GP_Phase3/genetic_map_chr15_combined_b37.txt --exclude-snp example_data/example_output/script_1/tmp/B01_cell_1.15.alignments.snp.strand.exclude --input-ref /research/bsi/projects/staff_analysis/m109297/software/shapeit_dependencies/reference/1000GP_Phase3/1000GP_Phase3_chr15.hap.gz /research/bsi/projects/staff_analysis/m109297/software/shapeit_dependencies/reference/1000GP_Phase3/1000GP_Phase3_chr15.legend.gz /research/bsi/projects/staff_analysis/m109297/software/shapeit_dependencies/reference/1000GP_Phase3/1000GP_Phase3.sample --output-log example_data/example_output/script_1/tmp/B01_cell_1.chr15 --output-max example_data/example_output/script_1/tmp/B01_cell_1.chr15
+Version : v2.r904
+Date    : 26/02/2020 16:05:18
+
+MODE -phase : PHASING GENOTYPE DATA
+  * Autosome (chr1 ... chr22)
+  * Window-based model (SHAPEIT v2)
+  * Reference panel of haplotypes used
+  * MCMC iteration
+
+Parameters :
+  * Seed : 1582754718
+  * Parallelisation: 4 threads
+  * Ref allele is NOT aligned on the reference genome
+  * MCMC: 35 iterations [7 B + 1 runs of 8 P + 20 M]
+  * Model: 100 states per window [100 H + 0 PM + 0 R + 0 COV ] / Windows of ~2.0 Mb / Ne = 15000
+
+Reading SNPs to exclude from input file in [example_data/example_output/script_1/tmp/B01_cell_1.15.alignments.snp.strand.exclude]
+  * 1082 snps found in the exclude list
+
+Reading unphased data in [example_data/example_output/script_1/tmp/B01_cell_1.chr15.het_snps.vcf]
+  * 1 samples included
+  * 1 unrelateds / 0 duos / 0 trios in 1 different families
+  * 1216 SNPs included
+  * 1081 SNPs excluded
+
+Reading sample list [/research/bsi/projects/staff_analysis/m109297/software/shapeit_dependencies/reference/1000GP_Phase3/1000GP_Phase3.sample]
+  * 5008 reference haplotypes included
+
+Reading SNPs in [/research/bsi/projects/staff_analysis/m109297/software/shapeit_dependencies/reference/1000GP_Phase3/1000GP_Phase3_chr15.legend.gz]
+  * 1216 reference panel sites included
+  * 2436261 reference panel sites excluded
+
+Reading reference haplotypes in [/research/bsi/projects/staff_analysis/m109297/software/shapeit_dependencies/reference/1000GP_Phase3/1000GP_Phase3_chr15.hap.gz]
+
+Reading genetic map in [/research/bsi/projects/staff_analysis/m109297/software/shapeit_dependencies/reference/1000GP_Phase3/genetic_map_chr15_combined_b37.txt]
+  * 90378 genetic positions found
+  * #set=310 / #interpolated=906
+  * Physical map [20.00 Mb -> 24.24 Mb] / Genetic map [0.00 cM -> 31.23 cM]
+
+Checking missingness and MAF...
+
+Building graphs ... 
+
+  * 1 graphs / 406 segments / ~2 SNPs per segment / 12941 transitions
+  * 0 haploids / 1 unrelateds / 0 duos / 0 trios
+  * 2 founder haplotypes
+  * 5008 reference haplotypes
+
+Sampling haplotypes
+
+
+Burn-in iteration [1/7]
+
+Burn-in iteration [2/7]
+
+Burn-in iteration [3/7]
+
+Burn-in iteration [4/7]
+
+Burn-in iteration [5/7]
+
+Burn-in iteration [6/7]
+
+Burn-in iteration [7/7]
+
+Pruning iteration [1/8]
+
+Pruning iteration [2/8]
+
+Pruning iteration [3/8]
+
+Pruning iteration [4/8]
+
+Pruning iteration [5/8]
+
+Pruning iteration [6/8]
+
+Pruning iteration [7/8]
+
+Pruning iteration [8/8]
+
+Pruning graphs
+
+  * 1 graphs / 158 segments / ~7 SNPs per segment / 2839 transitions
+  * 0 haploids / 1 unrelateds / 0 duos / 0 trios
+  * 2 founder haplotypes
+  * 5008 reference haplotypes
+
+Main iteration [1/20]
+
+Main iteration [2/20]
+
+Main iteration [3/20]
+
+Main iteration [4/20]
+
+Main iteration [5/20]
+
+Main iteration [6/20]
+
+Main iteration [7/20]
+
+Main iteration [8/20]
+
+Main iteration [9/20]
+
+Main iteration [10/20]
+
+Main iteration [11/20]
+
+Main iteration [12/20]
+
+Main iteration [13/20]
+
+Main iteration [14/20]
+
+Main iteration [15/20]
+
+Main iteration [16/20]
+
+Main iteration [17/20]
+
+Main iteration [18/20]
+
+Main iteration [19/20]
+
+Main iteration [20/20]
+
+Normalising graphs
+
+
+Solving haplotypes
+
+
+Writing sample list in [example_data/example_output/script_1/tmp/B01_cell_1.chr15.sample]
+
+Writing site list and haplotypes in [example_data/example_output/script_1/tmp/B01_cell_1.chr15.haps]
+
+Running time: 84 seconds

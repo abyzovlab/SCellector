@@ -1,0 +1,2 @@
+#Sample_name	Standard_deviation	Allele_dropout
+B01_cell_1	0.3699145523419847	0.5101214574898789
