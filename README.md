@@ -4,6 +4,9 @@
 	1. Matplotlib
 	1. Scipy
 	1. Numpy
+1. Other dependencies:
+    1. Samtools
+    1. Shapeit
 # **Configuration file setup:** 
 The method required the following tools and references. Please follow the steps to download the dependencies. 
 1. Shapeit (download and update "SHAPEIT_PATH"  in config_file/config.txt):
