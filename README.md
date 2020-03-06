@@ -9,9 +9,9 @@
     1. Shapeit
 ## **Setup:** 
 ### Download
-```
-git clone https://github.com/abyzovlab/Scellector.git
-```
+  ```
+  git clone https://github.com/abyzovlab/Scellector.git    
+  ```
 ### Configuration setup
 The method required the following tools and references. Please follow the steps to download the dependencies. 
 1. Shapeit (download and update "SHAPEIT_PATH"  in config_file/config.txt):
@@ -63,7 +63,7 @@ The method required the following tools and references. Please follow the steps 
    ```
 
 ## This package consists of three scripts which should be run sequentially:
-### Script 1:
+### Script-1:
 #### Input:
 This script takes a valid bulk vcf as input and does the following:
 1. Subsets the variants in the vcf to only heterozygous SNP present in 1000 genome.
@@ -101,7 +101,7 @@ python First_process_vcf.py -v example_data/example_input/B01_bulk_downsampled.v
 1. By using the "-l" option you can run each chromosome separately.
 1. By using "-f" option you will be running all chromosome in parallel. This is memory intensive but can be really fast depending on your computing capacity.
 
-### Script 2:
+### Script-2:
 #### Input: 
 This script takes a valid vcf (either from script 1 or otherwise) and a valid bam as input.
 1.It uses the variants from the vcf and generates a pileup using the bam files. By default it filters any read with less than 20 mapping quality and any base with less than 20 base quality. But this can be changed using the parameters
@@ -152,7 +152,7 @@ python Second_calculate_allele_frequency.py -b example_data/example_input/B01_ce
 1. By using "-f" option you will be running all chromosome in parallel. This is memory intensive but can be really fast depending on your computing capacity.
 1. This script generates also gives you the option to not split by chromosome and run everything as a whole with the “-n” option. This can be very time consuming if your data is too big.
 
-### Script 3:
+### Script-3:
 #### Input: 
 This script takes a the following files:
 1. Output file generate by the script 2 (AF_FILE)
@@ -206,9 +206,9 @@ python Third_generate_allele_frequency_plot.py -a example_data/example_output/sc
     1. B01_bulk_downsampled.vcf : This is a downsampled bulk vcf file that can be used to test the tool.
     
 1. Output of the tool can be found in "example_data/example_output":
-    1. script_1: results from running First_process_vcf.py
-    1. script_2: results from running Second_calculate_allele_frequency.py
-    1. script_3: results from running Third_generate_allele_frequency_plot.py
+    1. Script-1: results from running First_process_vcf.py
+    1. Script-2: results from running Second_calculate_allele_frequency.py
+    1. Script-3: results from running Third_generate_allele_frequency_plot.py
    
 ##### Notes:
  Please keep in mind that these examples are only to test the execution of the tool and is not a real example. You can find real examples in our paper. 
