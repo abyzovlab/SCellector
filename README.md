@@ -192,13 +192,13 @@ python Third_generate_allele_frequency_plot.py -a example_data/example_output/sc
 ### Example input and output files:
 
 ```
-# Script 1 : Takes a vcf, preprocesses it and generates phased data using shapeit
+# Script-1 : Takes a vcf, preprocesses it and generates phased data using shapeit
 python First_process_vcf.py -v example_data/example_input/B01_bulk_downsampled.vcf -o example_data/example_output/script_1/ -s B01_cell_1 -f
 
-# Script 2 : Generates allele frequency of variants using Bam file and vcf files
+# Script-2 : Generates allele frequency of variants using Bam file and vcf files
 python Second_calculate_allele_frequency.py -b example_data/example_input/B01_cell_1_downsampled.bam -v example_data/example_output/script_1/B01_cell_1.vcf -o example_data/example_output/script_2/ -s B01_cell_1 -f
 
-# Script 3 : Combines the data from phasing file and allele frequency file from first and second script to generate VAF plot
+# Script-3 : Combines the data from phasing file and allele frequency file from first and second script to generate VAF plot
 python Third_generate_allele_frequency_plot.py -a example_data/example_output/script_2/B01_cell_1.AF.txt -g example_data/example_output/script_1/B01_cell_1.vcf -o example_data/example_output/script_3/ -s B01_cell_1 -n 200
 ```
 1. Input examples can be found in "example_data/example_input":
