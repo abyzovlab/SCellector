@@ -62,7 +62,7 @@ The method required the following tools and references. Please follow the steps 
     wget ftp://gsapubftp-anonymous@ftp.broadinstitute.org/bundle/b37/dbsnp_138.b37.vcf.gz
    ```
 
-## This package consists of three scripts which should be run sequentially:
+## This package consists of three scripts which can be run sequencially:
 ### Script-1:
 #### Input:
 This script takes a valid bulk vcf as input and does the following:
